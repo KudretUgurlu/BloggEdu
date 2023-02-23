@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Abstract;
+using DataAccsessLayer.Repositories;
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace BusinessLayer.Concrete
 {
     public class CategoryManager : ICategoryService
     {
+        GenericRepository<Category> repo = new GenericRepository<Category>();
         public void CategoryAdd(Category category)
         {
             throw new NotImplementedException();
@@ -17,7 +19,11 @@ namespace BusinessLayer.Concrete
 
         public void CategoryDelete(Category category)
         {
-            throw new NotImplementedException();
+            if (category.CategoryID != 0)
+            {
+                repo.Delete(category);
+            }
+
         }
 
         public void CategoryUpdate(Category category)
