@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,6 +38,26 @@ namespace BloggEdu
                 .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
+            //------------------
+            services.AddMvc();
+            services.AddAuthentication(
+                CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(x =>
+                {
+                    x.LoginPath = "/Login/Index/";
+                }
+                );
+            //------------------
+            services.ConfigureApplicationCookie(options =>
+            {
+                //Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+                options.LoginPath = "/Login/Index/";
+                options.SlidingExpiration = true;
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
