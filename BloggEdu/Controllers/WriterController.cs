@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BloggEdu.Controllers
 {
-    [Authorize]
     public class WriterController : Controller
     {
         
