@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Abstract
 {
-    internal interface IBlogService:IBlogService<Blog>
+    internal interface IBlogService:IGenericService<Blog>
     {
         List<Blog> GetBlogListWithCategory();
+       
         List<Blog> GetBlogListByWriter(int id);
     }
 }
