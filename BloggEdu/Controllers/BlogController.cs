@@ -5,7 +5,10 @@ using EntityLayer.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BloggEdu.Controllers
 {
@@ -32,6 +35,14 @@ namespace BloggEdu.Controllers
         [HttpGet]
         public IActionResult BlogAdd()
         {
+            CategoryManager cm = new CategoryManager(new EfCategoryRepository());
+            List<SelectListItem> categoryvalues = (from x in cm.GetList()
+                                                   select new SelectListItem
+                                                   {
+                                                       Text=x.CategoryName,
+                                                       Value=x.CategoryID.ToString()
+                                                   }).ToList();
+            ViewBag.cv = categoryvalues;
             return View();
         }
         [HttpPost]
@@ -43,7 +54,7 @@ namespace BloggEdu.Controllers
             {
                 p.BlogStatus = true;
                 p.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-                p.WriterID=1;
+                p.WriterID = 1;
                 bm.TAdd(p);
                 return RedirectToAction("BlogListByWriter", "Blog");
             }
