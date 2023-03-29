@@ -29,7 +29,7 @@ namespace BloggEdu.Controllers
         }
         public IActionResult BlogListByWriter()
         {
-            var values = bm.GetBlogListByWriter(1);
+            var values = bm.GetLİstWithCategoryByWriterBm(1);
             return View(values);
         }
         [HttpGet]
