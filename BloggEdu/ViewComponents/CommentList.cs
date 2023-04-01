@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace BloggEdu.ViewComponents
 {
-    public class CommentList:ViewComponent
+    public class CommentList : ViewComponent
     {
         public IViewComponentResult Invoke()
         {
@@ -15,7 +15,7 @@ namespace BloggEdu.ViewComponents
                     ID = 1,
                     UserName = "Murat",
                 },
-                new UserComment 
+                new UserComment
                 {
                 ID=2,
                 UserName="Mesut"
