@@ -23,5 +23,6 @@ namespace DataAccsessLayer.Concrete
         public DbSet<NewsLetter> NewsLetters { get; set; }
         public DbSet<BlogRayting> BlogRaytings { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Message> Messages { get; set; }
     }
 }
