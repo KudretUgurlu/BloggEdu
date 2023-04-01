@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BusinessLayer.Concrete;
+using DataAccsessLayer.EntityFramework;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BloggEdu.Controllers
 {
     public class WriterController : Controller
     {
-        
+        WriterManager wm=new WriterManager(new EfWriterRepository());
         public IActionResult Index()
         {
             return View();
@@ -32,6 +34,12 @@ namespace BloggEdu.Controllers
         public PartialViewResult WriterFooterPartial()
         {
             return PartialView();
+        }
+        [AllowAnonymous]
+        public IActionResult WriterEditProfile() 
+        {
+            var writervalues = wm.TGetById(1);
+            return View(writervalues);
         }
 
     }

@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Concrete
 {
-	public class WriterManager:IWriterService
-	{
-		IWriterDal _writerdal;
+    public class WriterManager : IWriterService
+    {
+        IWriterDal _writerdal;
 
-		public WriterManager(IWriterDal writerdal)
-		{
-			_writerdal = writerdal;
-		}
+        public WriterManager(IWriterDal writerdal)
+        {
+            _writerdal = writerdal;
+        }
 
         public List<Writer> GetList()
         {
@@ -40,7 +40,7 @@ namespace BusinessLayer.Concrete
 
         public Writer TGetById(int id)
         {
-            throw new NotImplementedException();
+            return _writerdal.GetById(id);
         }
 
         public void TUpdate(Writer t)
@@ -48,6 +48,6 @@ namespace BusinessLayer.Concrete
             throw new NotImplementedException();
         }
 
-      
-	}
+
+    }
 }
