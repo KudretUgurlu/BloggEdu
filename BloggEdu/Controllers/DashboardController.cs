@@ -1,4 +1,6 @@
-﻿using DataAccsessLayer.Concrete;
+﻿using BusinessLayer.Concrete;
+using DataAccsessLayer.Concrete;
+using DataAccsessLayer.EntityFramework;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -7,7 +9,7 @@ namespace BloggEdu.Controllers
 {
     public class DashboardController : Controller
     {
-        [AllowAnonymous]
+        BlogManager bm = new BlogManager(new EfBlogRebository());
         public IActionResult Index()
         {
             Context c= new Context();
