@@ -28,7 +28,7 @@ namespace BloggEdu
         {
             services.AddControllersWithViews();
 
-          
+
             services.AddMvc(config =>
             {
                 var policy = new AuthorizationPolicyBuilder()
@@ -79,7 +79,7 @@ namespace BloggEdu
 
             app.UseAuthentication();
 
-          
+
 
             app.UseRouting();
 
@@ -88,8 +88,13 @@ namespace BloggEdu
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                name: "areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
+                endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
