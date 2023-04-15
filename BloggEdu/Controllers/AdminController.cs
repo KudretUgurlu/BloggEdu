@@ -11,5 +11,9 @@ namespace BloggEdu.Controllers
         {
             return View();
         }
+        public PartialViewResult AdminNavbarPartial()
+        {
+            return PartialView();
+        }
     }
 }
