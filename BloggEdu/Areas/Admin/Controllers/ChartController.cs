@@ -24,14 +24,20 @@ namespace BloggEdu.Areas.Admin.Controllers
             list.Add(new CategoryClass
             {
                 categoryname = "Yazılım",
-                categorycount = 10
+                categorycount = 14
             });
             list.Add(new CategoryClass
             {
                 categoryname = "Spor",
-                categorycount = 10
+                categorycount = 5
             });
-            return Json(new {jsonlist=list});
+            list.Add(new CategoryClass
+            {
+                categoryname = "Sinema",
+                categorycount = 2
+            });
+
+            return Json(new { jsonlist = list });
         }
     }
 }
