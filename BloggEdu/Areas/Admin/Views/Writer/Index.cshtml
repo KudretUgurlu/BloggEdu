@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
@@ -7,22 +6,31 @@
 <h1>Yazar Ajax İşlemleri</h1>
 <br />
 <button type="button" id="btngetlist" class="btn btn-outline-primary">Yazar Listesi</button>
-<br /><br />
+<br />
+<br />
 <div id="writerlist">
     Buraya yazarlar gelecek
 </div>
 @section scripts{
     <script>
-        $("#btngetlist").click(function(){
+        $("#btngetlist").click(function () {
             $.ajax({
-                contentType:"application/json",
-                dataType:"json",
-                type:"Get",
-                url: "/Admin/Writer/WriterList",
-                success:function(func){
-                    console.log(func);
+                contentType: "application/json",
+                dataType: "json",
+                type: "Get",
+                url: "/Admin/Writer/WriterList/",
+                success: function (func) {
+                    let w = jQuery.parseJSON(func);
+                    console.log(w);
+                    let tablehtml = "<div class='ibox-title'><h5>Yazar Listesi</h5></div><div class='ibox-content'><table class='table'><thead><tr><th> Yazar ID</th> <th> Yazar Adı </th></tr></thead>";
+                    $.each(w, (index, value) => {
+                        tablehtml += `<tr><td>${value.Id}</td> <td>${value.Name}</td></tr>`
+                    });
+                    tablehtml += "</table></div>";
+                    $("#writerlist").html(tablehtml);
                 }
             });
         });
+
     </script>
 }
