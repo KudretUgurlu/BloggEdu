@@ -23,8 +23,16 @@ namespace BloggEdu.Areas.Admin.Controllers
 
         public IActionResult GetWriterByID(int writerid)
         {
-            var findWriter=writers.FirstOrDefault(x=> x.Id == writerid);
-            var jsonWriters=JsonConvert.SerializeObject(findWriter);
+            var findWriter = writers.FirstOrDefault(x => x.Id == writerid);
+            var jsonWriters = JsonConvert.SerializeObject(findWriter);
+            return Json(jsonWriters);
+        }
+
+        [HttpPost]
+        public IActionResult AddWriter(WriterClass w)
+        {
+            writers.Add(w);
+            var jsonWriters = JsonConvert.SerializeObject(w);
             return Json(jsonWriters);
         }
 
