@@ -14,7 +14,7 @@
 </div>
 <br />
 <div id="writerget">
-    Buraya 1 yazar gelecek
+    
 </div>
 <br />
 <div>
@@ -53,6 +53,8 @@
                     let w = jQuery.parseJSON(func);
                     console.log(w);
 
+                    let getvalue = `<table class=table table-bordered> <tr><th>Yazar ID</th> <th>Yazar Adı</th></tr> <tr><td>${w.Id}</td><td>${w.Name}</td></tr></table`;
+                    $("#writerget").html(getvalue);
                 }
             });
         });
