@@ -13,16 +13,30 @@ namespace BlogApiDemo.Controllers
         public IActionResult EmployeeList()
         {
             using var c = new Context();
-            var values=c.Employees.ToList();
+            var values = c.Employees.ToList();
             return Ok(values);
         }
         [HttpPost]
         public IActionResult EmployeeAdd(Employee employee)
         {
-            using var c=new Context();
+            using var c = new Context();
             c.Add(employee);
             c.SaveChanges();
             return Ok();
+        }
+        [HttpGet("{id}")]
+        public IActionResult EmployeeGet(int id)
+        {
+            using var c = new Context();
+            var employee = c.Employees.Find(id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(employee);
+            }
         }
     }
 }
