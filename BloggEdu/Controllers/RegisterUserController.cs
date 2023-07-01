@@ -30,7 +30,7 @@ namespace BloggEdu.Controllers
                 {
                     Email = p.Mail,
                     UserName = p.UserName,
-                    NameSurname = p.UserName
+                    NameSurname = p.NameSurname
                 };
                 var result = await _userManager.CreateAsync(user, p.Password);
                 if (result.Succeeded)
