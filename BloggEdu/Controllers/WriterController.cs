@@ -54,7 +54,8 @@ namespace BloggEdu.Controllers
         public IActionResult WriterEditProfile()
         {
             Context c = new Context();
-            var usermail = User.Identity.Name;
+            var username = User.Identity.Name;
+            var usermail=c.Users.Where(x=>x.UserName==username).Select(y => y.Email).FirstOrDefault();
             var writerID = c.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterID).FirstOrDefault();
             var writervalues = wm.TGetById(writerID);
             return View(writervalues);
