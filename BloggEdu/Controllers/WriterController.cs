@@ -31,11 +31,13 @@ namespace BloggEdu.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            var usermail = User.Identity.Name;
-            ViewBag.v = usermail;
+            var username = User.Identity.Name;
+            ViewBag.v = username;
             Context c = new Context();
+            var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
             var writerName = c.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterName).FirstOrDefault();
             ViewBag.v2 = writerName;
+
             return View();
         }
         public IActionResult WriterProfile()
