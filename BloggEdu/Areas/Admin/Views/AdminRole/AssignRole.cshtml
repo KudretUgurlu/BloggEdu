@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 
-<form>
+<form method="post">
     @for (int i = 0; i < Model.Count; i++)
     {
         <div class="form-check">
@@ -15,6 +15,8 @@
             <label class="form-check-label" for="@Model[i].Exists">@Model[i].Name</label>
         </div>
     }
+    <br />
     <button class="btn btn-info">Değişiklikleri Kaydet</button>
 </form>
+<br />
     <a href="/Admin/AdminRole/UserRoleList/" class="btn btn-primary">Kullanıcı Listesine Dön</a>
