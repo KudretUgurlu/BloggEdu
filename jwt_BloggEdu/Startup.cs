@@ -42,7 +42,7 @@ namespace jwt_BloggEdu
                 {
                     ValidIssuer = "http://localhost",
                     ValidAudience = "http://localhst",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("BloggEduProject")),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("BloggEduProjectFirst")),
                     ValidateIssuerSigningKey = true,
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
@@ -62,6 +62,7 @@ namespace jwt_BloggEdu
             }
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
