@@ -2,6 +2,7 @@
 using BloggEdu.Models;
 using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 namespace BloggEdu.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin,Moderator")]
     public class AdminRoleController : Controller
     {
         private readonly RoleManager<AppRole> _roleManager;
