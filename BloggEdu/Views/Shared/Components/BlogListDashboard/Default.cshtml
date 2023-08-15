@@ -19,6 +19,8 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
+                                string categoryColorClass = GetCategoryColorClass(item.Category.CategoryName);
+
                                 <tr>
                                     <td>
                                         <img src="@item.BlogImage" class="mr-2" alt="image">
@@ -27,7 +29,7 @@
                                         @item.BlogTitle
                                     </td>
                                     <td>
-                                        <label class="badge badge-gradient-success">@item.Category.CategoryName</label>
+                                        <label class="badge @categoryColorClass">@item.Category.CategoryName</label>
                                     </td>
                                     <td> @(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy")) </td>
                                     <td>
@@ -35,6 +37,35 @@
                                     </td>
                                 </tr>
                             }
+
+                            @functions {
+                                string GetCategoryColorClass(string categoryName)
+                                {
+                                    switch (categoryName)
+                                    {
+                                        case "Yazilim":
+                                            return "badge-gradient-primary"; // Mavi renk
+                                        case "Teknoloji":
+                                            return "badge-gradient-success"; // Yeşil renk
+                                        case "Tiyatro":
+                                            return "badge-gradient-danger"; // Kırmızı renk
+                                        case "Sinema & Film":
+                                            return "badge-gradient-warning"; // Turuncu renk
+                                        case "Oyun":
+                                            return "badge-gradient-info"; // Mavi (bilgi) renk
+                                        case "Spor":
+                                            return "badge-gradient-purple"; // Mor renk
+                                        case "Seyahat":
+                                            return "badge-gradient-pink"; // Pembe renk
+                                        case "Donanım":
+                                            return "badge-gradient-secondary"; // Gri renk
+                                        default:
+                                            return "badge-gradient-secondary"; // Varsayılan olarak gri renk
+                                    }
+                                }
+                            }
+
+
                         </tbody>
                     </table>
                 </div>
