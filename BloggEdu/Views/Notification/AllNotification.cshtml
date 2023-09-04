@@ -12,13 +12,17 @@
         <th>Bildirim</th>
         <th>Tarih</th>
     </tr>
+    @{
+        int counter = 1; 
+    }
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.NotificationID</td>
+            <td>@counter</td>
             <td>@item.NotificationDetails</td>
             <td>@item.NotificationDate.ToShortDateString()</td>
         </tr>
+        counter++;
     }
 </table>
 
