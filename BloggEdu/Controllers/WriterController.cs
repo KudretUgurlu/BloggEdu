@@ -67,7 +67,7 @@ namespace BloggEdu.Controllers
         [HttpGet]
         public async Task<IActionResult> WriterEditProfile()
         {
-           
+
             var values = await _userManager.FindByNameAsync(User.Identity.Name);
             UserUpdateViewModel model = new UserUpdateViewModel();
             model.mail = values.Email;
@@ -81,13 +81,38 @@ namespace BloggEdu.Controllers
         public async Task<IActionResult> WriterEditProfile(UserUpdateViewModel model)
         {
             var values = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            if (model.password != model.confirmPassword)
+            {
+                ModelState.AddModelError("confirmPassword", "Parolalar eşleşmiyor.");
+                return View(model);
+            }
+
             values.NameSurname = model.namesurname;
             values.ImageUrl = model.imageurl;
             values.Email = model.mail;
-            values.PasswordHash=_userManager.PasswordHasher.HashPassword(values,model.password);
-            var result=await _userManager.UpdateAsync(values);
+
+            if (!string.IsNullOrEmpty(model.password))
+            {
+                values.PasswordHash = _userManager.PasswordHasher.HashPassword(values, model.password);
+            }
+
+            var result = await _userManager.UpdateAsync(values);
+
+            if (!result.Succeeded)
+            {
+                // Hata oluştu, ModelState'e hataları ekleyin
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                return View(model);
+            }
+
             return RedirectToAction("Index", "Dashboard");
         }
+
         [AllowAnonymous]
         [HttpGet]
         public IActionResult WriterAdd()
