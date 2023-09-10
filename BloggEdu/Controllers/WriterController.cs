@@ -23,10 +23,12 @@ namespace BloggEdu.Controllers
 
 
         private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
 
-        public WriterController(UserManager<AppUser> userManager)
+        public WriterController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [Authorize]
@@ -96,6 +98,7 @@ namespace BloggEdu.Controllers
             if (!string.IsNullOrEmpty(model.password) && !model.ChangePassword)
             {
                 values.PasswordHash = _userManager.PasswordHasher.HashPassword(values, model.password);
+                await _signInManager.SignOutAsync();
             }
 
 
