@@ -1,4 +1,5 @@
-﻿using BloggEdu.Models;
+﻿using BloggEdu.Helpers;
+using BloggEdu.Models;
 using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
 using DataAccsessLayer.Concrete;
@@ -24,11 +25,13 @@ namespace BloggEdu.Controllers
 
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly FileHelper _fileHelper;
 
-        public WriterController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public WriterController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, FileHelper fileHelper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _fileHelper = fileHelper;
         }
 
         [Authorize]
@@ -92,7 +95,19 @@ namespace BloggEdu.Controllers
             }
 
             values.NameSurname = model.namesurname;
-            values.ImageUrl = model.imageurl;
+
+
+            if (model.ImageFile != null)
+            {
+                string imagePath = await _fileHelper.ResmiKaydet(model.ImageFile);
+                if (imagePath != null)
+                {
+                    values.ImageUrl = imagePath;
+                }
+            }
+
+
+            // values.ImageUrl = model.imageurl;
             values.Email = model.mail;
 
             if (!string.IsNullOrEmpty(model.password) && !model.ChangePassword)

@@ -10,7 +10,7 @@
         <div class="card-body">
             <h4 class="card-title">Yazar Profil Bilgileri Düzenleme</h4>
             <br />
-            <form class="forms-sample" method="post">
+            <form class="forms-sample" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="exampleInputName1">Yazar Ad Soyad</label>
                     <input type="text" asp-for="@Model.namesurname" class="form-control" />
@@ -49,9 +49,13 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail3">Resim Yolu</label>
-                    <input type="text" asp-for="@Model.imageurl" class="form-control" />
+                    <label for="exampleInputFile">Profil Resmi</label>
+                    <input type="file" class="form-control-file" id="exampleInputFile" asp-for="@Model.ImageFile" />
                 </div>
+                @* <div class="form-group">
+                <label for="exampleInputEmail3">Resim Yolu</label>
+                <input type="text" asp-for="@Model.imageurl" class="form-control" />
+                </div> *@
                 <button type="submit" class="btn btn-gradient-primary mr-2">Güncelle</button>
                 <button class="btn btn-light">İptal</button>
             </form>
