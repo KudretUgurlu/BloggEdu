@@ -5,6 +5,7 @@ using DataAccsessLayer.Concrete;
 using DataAccsessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -92,10 +93,11 @@ namespace BloggEdu.Controllers
             values.ImageUrl = model.imageurl;
             values.Email = model.mail;
 
-            if (!string.IsNullOrEmpty(model.password))
+            if (!string.IsNullOrEmpty(model.password) && !model.ChangePassword)
             {
                 values.PasswordHash = _userManager.PasswordHasher.HashPassword(values, model.password);
             }
+
 
             var result = await _userManager.UpdateAsync(values);
 

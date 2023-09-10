@@ -8,5 +8,6 @@
         public string imageurl { get; set; }
         public string password { get; set; }
         public string confirmPassword { get; set; }
+        public bool ChangePassword { get; set; }
     }
 }

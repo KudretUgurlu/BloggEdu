@@ -23,16 +23,30 @@
                     <label for="exampleInputEmail3">Mail Adresi</label>
                     <input type="text" asp-for="@Model.mail" class="form-control" />
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail3">Yeni Şifreniz</label>
-                    <input type="password" asp-for="@Model.password" class="form-control" />
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="exampleInputEmail3">Yeni Şifreniz</label>
+                            <input type="password" asp-for="@Model.password" class="form-control" />
+                            <div class="text-danger" id="tiklanmadi-message" style="display: none;">Lütfen yeni şifrenizi giriniz</div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="exampleInputEmail3">Yeni Şifre Tekrar</label>
+                            <input type="password" asp-for="@Model.confirmPassword" class="form-control" />
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail3">Yeni Şifre Tekrar</label>
-                    <input type="password" asp-for="@Model.confirmPassword" class="form-control" />
-                </div>
+
                 <div class="text-danger">
                     @Html.ValidationMessage("confirmPassword")
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="flexCheckChecked" asp-for="@Model.ChangePassword" checked="checked">
+                    <label for="flexCheckChecked">
+                        Şifremi Değiştirmek İstemiyorum
+                    </label>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail3">Resim Yolu</label>
@@ -44,6 +58,20 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    document.getElementById('flexCheckChecked').addEventListener('change', function () {
+        var message = document.getElementById('tiklanmadi-message');
+        if (this.checked) {
+
+            message.style.display = 'none';
+        } else {
+
+            message.style.display = 'block';
+        }
+    });
+</script>
 
 
 
