@@ -95,8 +95,6 @@ namespace BloggEdu.Controllers
             }
 
             values.NameSurname = model.namesurname;
-
-
             if (model.ImageFile != null)
             {
                 string imagePath = await _fileHelper.ResmiKaydet(model.ImageFile);
@@ -105,9 +103,6 @@ namespace BloggEdu.Controllers
                     values.ImageUrl = imagePath;
                 }
             }
-
-
-            // values.ImageUrl = model.imageurl;
             values.Email = model.mail;
 
             if (!string.IsNullOrEmpty(model.password) && !model.ChangePassword)
@@ -115,7 +110,6 @@ namespace BloggEdu.Controllers
                 values.PasswordHash = _userManager.PasswordHasher.HashPassword(values, model.password);
                 await _signInManager.SignOutAsync();
             }
-
 
             var result = await _userManager.UpdateAsync(values);
 
