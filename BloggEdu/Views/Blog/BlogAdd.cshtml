@@ -7,11 +7,12 @@
 
 <h1>Yeni Blog Girişi</h1>
 <br />
-@using (Html.BeginForm("BlogAdd", "Blog", FormMethod.Post))
-{
+@* @using (Html.BeginForm("BlogAdd", "Blog", FormMethod.Post)) *@
+<form class="form-group" method="post" enctype="multipart/form-data">
+
     @Html.Label("Blog Başlığı")
-    @Html.TextBoxFor(x=>x.BlogTitle, new {@class="form-control"} )
-    @Html.ValidationMessageFor(x=>x.BlogTitle)
+    @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control" , @required="required" })
+    @Html.ValidationMessageFor(x => x.BlogTitle, "", new { @class = "text-danger" })
     <br />
     @Html.Label("Blog Görseli")
     @Html.TextBoxFor(x=>x.BlogImage, new {@class="form-control"} )
@@ -24,10 +25,20 @@
     @Html.Label("Kategori")
     @Html.DropDownListFor(x=>x.CategoryID,(List<SelectListItem>)ViewBag.cv,new{@class ="form-control"})
     <br />
-    @Html.Label("Blog İçeriği")
-    @Html.TextAreaFor(x=>x.BlogContent,15,3, new {@class="form-control"} )
-    @Html.ValidationMessageFor(x=>x.BlogContent)
+    <textarea id="blogContent" name="BlogContent"></textarea>
+    @Html.ValidationMessageFor(x => x.BlogContent, "", new { @class = "text-danger" })
     <br />
     <button class="btn btn-info">Yazıyı Kaydet</button>
-}
+</form>
+
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector: 'textarea#blogContent',
+        plugins: 'advlist autolink lists link image charmap print preview anchor',
+        toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+    });
+</script>
+
+
 

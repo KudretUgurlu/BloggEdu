@@ -1,4 +1,5 @@
-﻿@using EntityLayer.Concrete
+﻿@using HtmlAgilityPack;
+@using EntityLayer.Concrete
 @model List<Blog>
 @{
     ViewData["Title"] = "Index";
@@ -40,12 +41,22 @@
                                 <h5 class="card-title">
                                     <a href="/Blog/BlogReadAll/@item.BlogID/">@item.BlogTitle</a>
                                 </h5>
-                                <p class="card-text mb-3">@item.BlogContent.Substring(0,item.BlogContent.Substring(0,130).LastIndexOf(" "))...</p>
+
+                                @{
+                                    var htmlDocument = new HtmlDocument();
+                                    htmlDocument.LoadHtml(item.BlogContent.Substring(0, 130));
+                                    var sanitizedHtml = HtmlEntity.DeEntitize(htmlDocument.DocumentNode.InnerText);
+                                }
+
+                                <p class="card-text mb-3">@Html.Raw(sanitizedHtml)...</p>
+
+                                @*<p class="card-text mb-3">@Html.Raw(Html.Encode(item.BlogContent.Substring(0, 130)))...</p>
+                                <p class="card-text mb-3">@item.BlogContent.Substring(0,item.BlogContent.Substring(0,130).LastIndexOf(" "))...</p>*@
                                 <a href="/Blog/BlogReadAll/@item.BlogID/" class="btn btn-primary read-m">Devamını Oku</a>
                             </div>
                         </div>
                         <br />
-                    } 
+                    }
                 </div>
                 <!--//left-->
             </div>

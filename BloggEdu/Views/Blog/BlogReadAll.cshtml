@@ -53,7 +53,7 @@
                                 <a href="single.html">@item.BlogTitle</a>
                             </h3>
                             <p>
-                                @item.BlogContent
+                                @Html.Raw(item.BlogContent)
                             </p>
                             <a href="/Blog/Index/" class="btn btn-primary read-m">Blog Listesi</a>
                         </div>
