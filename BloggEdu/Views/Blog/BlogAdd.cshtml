@@ -25,7 +25,8 @@
     @Html.Label("Kategori")
     @Html.DropDownListFor(x=>x.CategoryID,(List<SelectListItem>)ViewBag.cv,new{@class ="form-control"})
     <br />
-    <textarea id="blogContent" name="BlogContent"></textarea>
+   @*  <textarea id="blogContent" name="BlogContent"></textarea> *@
+    <div id="blogContent" name="BlogContent"></div>
     @Html.ValidationMessageFor(x => x.BlogContent, "", new { @class = "text-danger" })
     <br />
     <button class="btn btn-info">Yazıyı Kaydet</button>
@@ -34,11 +35,54 @@
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
 <script>
     tinymce.init({
-        selector: 'textarea#blogContent',
+        selector: 'div#blogContent',
         plugins: 'advlist autolink lists link image charmap print preview anchor',
-        toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+        toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+        image_advtab: true, // Resimler için gelişmiş sekme göster
+        image_title: true, // Resimlere başlık ekleme
+        image_caption: true, // Resimlere altyazı ekleme
+        image_dimensions: true, // Resim boyutları düzenleme
+        image_class_list: [
+            { title: 'None', value: '' }, // Resimler için sınıf seçeneği
+            { title: 'Responsive', value: 'img-responsive' } // Örnek bir sınıf
+        ],
+        file_picker_types: 'image', // Yalnızca resim dosyalarına izin ver
+        file_picker_callback: function (callback, value, meta) {
+            if (meta.filetype === 'image') {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+
+                input.onchange = function () {
+                    var file = this.files[0];
+
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+
+                    reader.onload = function () {
+                        var img = new Image();
+                        img.src = reader.result;
+
+                        img.onload = function () {
+                            var width = img.width;
+                            var height = img.height;
+
+                            // Resmi düzenleme penceresini aç
+                            callback(reader.result, {
+                                alt: '',
+                                width: width,
+                                height: height
+                            });
+                        };
+                    };
+                };
+
+                input.click();
+            }
+        }
     });
 </script>
+
 
 
 

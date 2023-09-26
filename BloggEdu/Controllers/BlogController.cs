@@ -52,6 +52,7 @@ namespace BloggEdu.Controllers
                                                        Value = x.CategoryID.ToString()
                                                    }).ToList();
             ViewBag.cv = categoryvalues;
+            ViewData["CategoryID"] = categoryvalues;
             return View();
         }
         [HttpPost]
@@ -79,6 +80,7 @@ namespace BloggEdu.Controllers
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
             }
+            ViewData["CategoryID"] = new SelectList(cm.GetList(), "CategoryID", "CategoryName");
             return View();
 
         }
