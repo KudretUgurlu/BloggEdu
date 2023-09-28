@@ -5,10 +5,12 @@ using DataAccsessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace BloggEdu.Controllers
@@ -56,12 +58,29 @@ namespace BloggEdu.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult BlogAdd(Blog p)
+        public IActionResult BlogAdd(Blog p, IFormFile BlogImage)
         {
 
             var username = User.Identity.Name;
             var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
             var writerID = c.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterID).FirstOrDefault();
+
+            if (BlogImage != null && BlogImage.Length > 0)
+            {
+                // Dosya adını alın
+                string fileName = Path.GetFileName(BlogImage.FileName);
+
+                // Belirlediğiniz bir klasöre kaydedin (örneğin wwwroot/images)
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/BlogImages", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    BlogImage.CopyTo(stream);
+                }
+
+                // Blog nesnesinin BlogImage özelliğine dosya yolunu kaydedin
+                p.BlogImage = "/images/BlogImages/" + fileName;
+            }
 
             BlogValidator bv = new BlogValidator();
             ValidationResult result = bv.Validate(p);

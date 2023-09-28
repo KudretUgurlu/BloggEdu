@@ -14,9 +14,8 @@
     @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control" , @required="required" })
     @Html.ValidationMessageFor(x => x.BlogTitle, "", new { @class = "text-danger" })
     <br />
-    @Html.Label("Blog Görseli")
-    @Html.TextBoxFor(x=>x.BlogImage, new {@class="form-control"} )
-    @Html.ValidationMessageFor(x=>x.BlogImage)
+    <label for="BlogImage">Blog Görseli</label>
+    <input type="file" id="BlogImage" name="BlogImage" class="form-control" />
     <br />
     @Html.Label("Blog Küçük Görsel")
     @Html.TextBoxFor(x=>x.BlogThumbnailImage, new {@class="form-control"} )
