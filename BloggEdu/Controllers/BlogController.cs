@@ -134,5 +134,23 @@ namespace BloggEdu.Controllers
             bm.TUpdate(p);
             return RedirectToAction("BlogListByWriter");
         }
+        public IActionResult ChangeBlogStatus(int id)
+        {
+            // Blog id'sine göre veritabanından ilgili blogu getirin
+            var blog = bm.TGetById(id);
+
+            if (blog != null)
+            {
+                // Blogun durumunu tersine çevirin
+                blog.BlogStatus = !blog.BlogStatus;
+
+                // Blogun güncel halini veritabanına kaydedin
+                bm.TUpdate(blog);
+            }
+
+            // BlogListByWriter sayfasına geri dönün
+            return RedirectToAction("BlogListByWriter");
+        }
+
     }
 }
