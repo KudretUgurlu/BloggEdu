@@ -13,6 +13,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+
+
+
 namespace BloggEdu.Controllers
 {
     [AllowAnonymous]
@@ -151,6 +154,5 @@ namespace BloggEdu.Controllers
             // BlogListByWriter sayfasına geri dönün
             return RedirectToAction("BlogListByWriter");
         }
-
     }
 }

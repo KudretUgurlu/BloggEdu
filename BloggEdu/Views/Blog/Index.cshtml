@@ -5,62 +5,70 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/UserLayout.cshtml";
 }
+<style>
+    /* Resmin taşmasını önlemek için kartı sınırla */
+    .card {
+        max-width: 100%;
+        overflow: hidden;
+    }
 
+        /* Resimlere uygun boyut ve yükseklik ayarları */
+        .card .card-img-top {
+            width: 100%;
+            height: 280px;
+            /* object-fit: cover; */ /* Resmin uygun şekilde ölçeklenmesini sağlar */
+        }
+
+</style>
 <section class="main-content-w3layouts-agileits">
     <div class="container">
         <h3 class="tittle">Bloglar</h3>
         <div class="inner-sec">
-            <!--left-->
-            <div class="left-blog-info-w3layouts-agileits text-left">
-                <div class="row">
-                    @foreach (var item in Model)
-                    {
-                        <div class="col-lg-4 card">
-                            <a href="single.html">
+            <!-- Blog List -->
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <!-- Resim -->
+                            <a href="/Blog/BlogReadAll/@item.BlogID/">
                                 <img src="@item.BlogImage" class="card-img-top img-fluid" alt="">
                             </a>
                             <div class="card-body">
+                                <!-- Tarih, Yorum ve Kategori -->
                                 <ul class="blog-icons my-4">
                                     <li>
-                                        <a href="#">
-                                            <i class="far fa-calendar-alt"></i> @(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))
-                                        </a>
+                                        <i class="far fa-calendar-alt"></i> @(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))
                                     </li>
                                     <li class="mx-2">
-                                        <a href="#">
-                                            <i class="far fa-comment"></i> 0
-                                        </a>
+                                        <i class="far fa-comment"></i> 0 <!-- Yorum sayısı -->
                                     </li>
                                     <li>
-                                        <a href="#">
-                                            <i class="fas fa-eye"></i> @item.Category.CategoryName
-                                        </a>
+                                        <i class="fas fa-eye"></i> @item.Category.CategoryName
                                     </li>
-
                                 </ul>
+                                <!-- Başlık -->
                                 <h5 class="card-title">
                                     <a href="/Blog/BlogReadAll/@item.BlogID/">@item.BlogTitle</a>
                                 </h5>
-
+                                <!-- İçerik Özeti -->
                                 @{
                                     var htmlDocument = new HtmlDocument();
-                                    htmlDocument.LoadHtml(item.BlogContent.Substring(0, 130));
+                                    htmlDocument.LoadHtml(item.BlogContent);
                                     var sanitizedHtml = HtmlEntity.DeEntitize(htmlDocument.DocumentNode.InnerText);
+                                    var truncatedHtml = sanitizedHtml.Length > 130 ? sanitizedHtml.Substring(0, 130) : sanitizedHtml;
                                 }
-
-                                <p class="card-text mb-3">@Html.Raw(sanitizedHtml)...</p>
-
-                                @*<p class="card-text mb-3">@Html.Raw(Html.Encode(item.BlogContent.Substring(0, 130)))...</p>
-                                <p class="card-text mb-3">@item.BlogContent.Substring(0,item.BlogContent.Substring(0,130).LastIndexOf(" "))...</p>*@
+                                <p class="card-text mb-3">@Html.Raw(truncatedHtml)...</p>
+                                <!-- Devamını Oku Butonu -->
                                 <a href="/Blog/BlogReadAll/@item.BlogID/" class="btn btn-primary read-m">Devamını Oku</a>
                             </div>
                         </div>
-                        <br />
-                    }
-                </div>
-                <!--//left-->
+                    </div>
+                }
             </div>
+            <!--// Blog List -->
         </div>
     </div>
 </section>
+
 
