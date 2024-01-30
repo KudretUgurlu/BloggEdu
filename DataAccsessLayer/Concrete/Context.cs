@@ -17,11 +17,11 @@ namespace DataAccsessLayer.Concrete
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           modelBuilder.Entity<Match>()
-                .HasOne(x=>x.HomeTeam)
-                .WithMany(y=>y.HomeMatches)
-                .HasForeignKey(z=>z.HomeTeamID)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+            modelBuilder.Entity<Match>()
+                 .HasOne(x => x.HomeTeam)
+                 .WithMany(y => y.HomeMatches)
+                 .HasForeignKey(z => z.HomeTeamID)
+                 .OnDelete(DeleteBehavior.ClientSetNull);
             modelBuilder.Entity<Match>()
                 .HasOne(x => x.GuestTeam)
                 .WithMany(y => y.AwayMatches)
@@ -48,7 +48,7 @@ namespace DataAccsessLayer.Concrete
 
         }
 
-        public DbSet<About> Abouts { get; set; } 
+        public DbSet<About> Abouts { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }

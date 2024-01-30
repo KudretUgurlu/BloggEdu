@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityLayer.Concrete
 {
@@ -11,5 +13,9 @@ namespace EntityLayer.Concrete
     {
         public string NameSurname { get; set; }
         public string ImageUrl { get; set; }
+
+        [ForeignKey("Writer")]
+        public int? WriterID { get; set; }
+        public Writer Writer { get; set; }
     }
 }

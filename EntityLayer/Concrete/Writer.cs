@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace EntityLayer.Concrete
 {
@@ -20,5 +22,8 @@ namespace EntityLayer.Concrete
         public List<Blog> Blogs { get; set; }
         public virtual ICollection<Message2> WriterSender { get; set; }
         public virtual ICollection<Message2> WriterReceiver { get; set; }
+
+        [InverseProperty("Writer")]
+        public AppUser AppUser { get; set; }
     }
 }
