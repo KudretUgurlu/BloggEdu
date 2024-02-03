@@ -81,6 +81,7 @@ namespace BloggEdu.Controllers
             model.imageurl = values.ImageUrl;
             model.username = values.UserName;
             model.userabout = values.UserAbout;
+            model.usertitle = values.UserTitle;
             return View(model);
         }
 
@@ -106,6 +107,7 @@ namespace BloggEdu.Controllers
             }
             values.Email = model.mail;
             values.UserAbout = model.userabout;
+            values.UserTitle=model.usertitle;
 
             if (!string.IsNullOrEmpty(model.password) && !model.ChangePassword)
             {

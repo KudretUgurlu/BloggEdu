@@ -11,6 +11,9 @@ namespace BloggEdu.Models
         public string imageurl { get; set; }
         public string userabout { get; set; }
 
+        [StringLength(20, ErrorMessage = "Mesleki unvanın uzunluğu en fazla 20 karakter olmalıdır.")]
+        public string usertitle { get; set; }
+
         [Display(Name = "Profil Resmi")]
         public IFormFile ImageFile { get; set; }
 
