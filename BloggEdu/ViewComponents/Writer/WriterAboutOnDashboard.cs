@@ -23,6 +23,11 @@ namespace BloggEdu.ViewComponents.Writer
             var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
             var writerID = c.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterID).FirstOrDefault();
             var values = writermanager.GetWriterById(writerID);
+            var writerimage = c.Users.Where(x => x.UserName == username).Select(y => y.ImageUrl).FirstOrDefault();
+            var writerabout = c.Users.Where(x => x.UserName == username).Select(y => y.UserAbout).FirstOrDefault();
+            ViewBag.writerimage = writerimage;
+            ViewBag.writerabout = writerabout;
+
             return View(values);
         }
     }

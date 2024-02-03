@@ -62,7 +62,7 @@ namespace BloggEdu.Controllers
                         WriterStatus = true // veya istediğiniz bir değer
                     };
 
-                    using (var context = new Context()) 
+                    using (var context = new Context())
                     {
                         context.Writers.Add(writer); // Writer'ı ekleyin
                         context.SaveChanges(); // Değişiklikleri kaydedin

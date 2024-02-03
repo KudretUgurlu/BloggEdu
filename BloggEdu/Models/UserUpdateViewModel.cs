@@ -9,6 +9,7 @@ namespace BloggEdu.Models
         public string username { get; set; }
         public string mail { get; set; }
         public string imageurl { get; set; }
+        public string userabout { get; set; }
 
         [Display(Name = "Profil Resmi")]
         public IFormFile ImageFile { get; set; }

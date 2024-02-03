@@ -13,6 +13,7 @@ namespace EntityLayer.Concrete
     {
         public string NameSurname { get; set; }
         public string ImageUrl { get; set; }
+        public string UserAbout {  get; set; }
 
         [ForeignKey("Writer")]
         public int? WriterID { get; set; }
