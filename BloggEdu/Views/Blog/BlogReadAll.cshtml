@@ -32,7 +32,7 @@
                             <div class="b-grid-top">
                                 <div class="blog_info_left_grid">
                                     <a href="single.html">
-                                        <img src="~/BloggEduThema/images/b1.jpg" class="img-fluid" alt="">
+                                        <img src="@item.BlogImage" class="img-fluid" alt="">
                                     </a>
                                 </div>
                                 <div class="blog-info-middle">
@@ -52,6 +52,13 @@
                                                 <i class="far fa-comment"></i> 0 Yorum
                                             </a>
                                         </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fas fa-user"></i> Yazar: @ViewBag.writername
+                                            </a>
+                                        </li>
+
+
 
                                     </ul>
                                 </div>

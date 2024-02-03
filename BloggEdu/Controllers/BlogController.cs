@@ -35,6 +35,9 @@ namespace BloggEdu.Controllers
         {
             ViewBag.i = id;
             var values = bm.GetBlogByID(id);
+            var writerID = c.Blogs.Where(x=>x.BlogID==id).Select(y=>y.WriterID).FirstOrDefault();
+            var writername=c.Writers.Where(x=>x.WriterID==writerID).Select(y=>y.WriterName).FirstOrDefault();
+            ViewBag.writername = writername;
             return View(values);
         }
         public IActionResult BlogListByWriter()
