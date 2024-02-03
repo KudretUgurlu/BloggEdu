@@ -7,6 +7,14 @@
 
 <!DOCTYPE html>
 <html lang="zxx">
+<head>
+    <style>
+        .blog-grid-top img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
 <body>
 
 
@@ -59,7 +67,7 @@
                         </div>
                     }
 
-                    @await Component.InvokeAsync("CommentListByBlog",new{id=ViewBag.i})
+                    @await Component.InvokeAsync("CommentListByBlog", new { id = ViewBag.i })
 
                     @* @await Html.PartialAsync("~/Views/Comment/CommentListByBlog.cshtml")*@
                     @await Html.PartialAsync("~/Views/Comment/PartialAddComment.cshtml")
@@ -75,7 +83,7 @@
                             <img src="~/BloggEduThema/images/banner1.jpg" class="img-fluid" alt="">
                         </div>
                         <h4>Mail Bültenine Abone Olun</h4>
-                       @await Html.PartialAsync("~/Views/NewsLetter/SubscribeMail.cshtml")
+                        @await Html.PartialAsync("~/Views/NewsLetter/SubscribeMail.cshtml")
 
                         @await Component.InvokeAsync("CategoryList")
 
