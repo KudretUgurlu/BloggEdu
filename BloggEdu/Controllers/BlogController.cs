@@ -130,7 +130,7 @@ namespace BloggEdu.Controllers
             return View(blogvalue);
         }
         [HttpPost]
-        public IActionResult EditBlog(Blog p)
+        public IActionResult EditBlog(Blog p, IFormFile BlogImage)
         {
             var username = User.Identity.Name;
             var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
@@ -138,7 +138,33 @@ namespace BloggEdu.Controllers
             p.WriterID = writerID;
             p.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
             p.BlogStatus = true;
-            bm.TUpdate(p);
+            if (BlogImage != null && BlogImage.Length > 0)
+            {
+                // Dosya adını alın
+                string fileName = Path.GetFileName(BlogImage.FileName);
+
+                // Belirlediğiniz bir klasöre kaydedin (örneğin wwwroot/images)
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/BlogImages", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    BlogImage.CopyTo(stream);
+                }
+
+                // Blog nesnesinin BlogImage özelliğine dosya yolunu kaydedin
+                p.BlogImage = "/images/BlogImages/" + fileName;
+            }
+            else
+            {
+                // BlogImage yüklenmediğinde, mevcut görseli koruyun
+                // Önceki blog görselini almak için mevcut blog nesnesini veritabanından sorgulayın
+                var existingBlog = bm.TGetById(p.BlogID);
+                if (existingBlog != null)
+                {
+                    p.BlogImage = existingBlog.BlogImage; // Mevcut görseli kullan
+                }
+            }
+                bm.TUpdate(p);
             return RedirectToAction("BlogListByWriter");
         }
         public IActionResult ChangeBlogStatus(int id)

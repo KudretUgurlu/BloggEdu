@@ -6,26 +6,76 @@
 
 <h1>Blog Düzenleme Sayfası</h1>
 <br />
-@using(Html.BeginForm("EditBlog","Blog",FormMethod.Post))
-{
-    @Html.Label("Blog ID")
-    @Html.TextBoxFor(x=>x.BlogID,new{@class="form-control"})
-    <br />
+<form class="form-group" method="post" enctype="multipart/form-data">
+    @Html.HiddenFor(x => x.BlogID)
     @Html.Label("Blog Başlığı")
-    @Html.TextBoxFor(x=>x.BlogTitle,new{@class="form-control"})
+    @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control", @required = "required" })
+    @Html.ValidationMessageFor(x => x.BlogTitle, "", new { @class = "text-danger" })
     <br />
-    @Html.Label("Blog Thumbnail Url")
-    @Html.TextBoxFor(x=>x.BlogThumbnailImage,new{@class="form-control"})
-    <br />
-    @Html.Label("Blog Görseli")
-    @Html.TextBoxFor(x=>x.BlogImage,new{@class="form-control"})
-    <br />
-    @Html.Label("Blog Kategori")
-    @Html.DropDownListFor(x=>x.CategoryID,(List<SelectListItem>)ViewBag.cv,new{@class ="form-control"})
-    <br />
-    @Html.Label("Blog İçeriği")
-    @Html.TextAreaFor(x=>x.BlogContent,10,3,new{@class="form-control"})
-    <br />
-    <button class="btn btn-success">Güncelle</button>
-}
+    @if (Model.BlogImage != null)
+    {
+        <div>
+            <label>Mevcut Görsel</label>
+            <img src="@Url.Content(Model.BlogImage)" class="form-control" style="max-height: 200px; max-width: 100%; height: auto; width: auto;" />
+        </div>
+        <br />
+    }
 
+    <label for="BlogImage">Blog Görseli</label>
+    <input type="file" id="BlogImage" name="BlogImage" class="form-control" />
+    <br />
+    @*  @Html.Label("Blog Küçük Görsel")
+    @Html.TextBoxFor(x => x.BlogThumbnailImage, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.BlogThumbnailImage)
+    <br /> *@
+    @Html.Label("Kategori")
+    @Html.DropDownListFor(x => x.CategoryID, (List<SelectListItem>)ViewBag.cv, new { @class = "form-control" })
+    <br />
+    @*  <textarea id="blogContent" name="BlogContent"></textarea> *@
+    <!-- BlogContent için textarea kullanıyoruz -->
+    @Html.TextAreaFor(x => x.BlogContent, new { @id = "blogContent", @style = "height:400px;", @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.BlogContent, "", new { @class = "text-danger" })
+    <br />
+    <button class="btn btn-info">Yazıyı Kaydet</button>
+</form>
+
+<script src="https://cdn.tiny.cloud/1/qtgc2kpt7ufzro4sj2bz81bwzfj138fsz69jp20mo5ogkfop/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: 'textarea#blogContent',
+        plugins: 'advlist autolink lists link image charmap print preview anchor autoresize',
+        toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+        image_advtab: true,
+        image_title: true,
+        image_caption: true,
+        image_dimensions: true,
+        image_class_list: [
+            { title: 'None', value: '' },
+            { title: 'Responsive', value: 'img-responsive' }
+        ],
+        file_picker_types: 'image',
+        file_picker_callback: function (callback, value, meta) {
+            if (meta.filetype === 'image') {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+                input.onchange = function () {
+                    var file = this.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        callback(reader.result, { alt: file.name });
+                    };
+                    reader.readAsDataURL(file);
+                };
+                input.click();
+            }
+        },
+        autoresize_bottom_margin: 20, // Alt kısımda biraz boşluk bırakır
+        autoresize_min_height: 400, // Başlangıçta minimum yükseklik
+        autoresize_max_height: 800, // Maksimum yükseklik sınırı. İçeriğin bu yüksekliği aşması durumunda scroll bar görünür.
+        autoresize_overflow_padding: 10, // İçerik ve editör kenarları arasında padding
+        setup: function (editor) {
+            // Bu bölüm artık boş bırakılabilir
+        }
+    });
+</script>
