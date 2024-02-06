@@ -8,9 +8,12 @@
 <br />
 @using (Html.BeginForm("SendMEssage", "Message", FormMethod.Post))
 {
-    @Html.Label("Alıcı")
-   @* @Html.TextBoxFor(x=>x., new {@class="form-control"} )*@
-   <input type="text" class="form-control" />
+   @*  @Html.Label("Alıcı")
+   @Html.TextBoxFor(x=>x., new {@class="form-control"} )
+   <input type="text" class="form-control" /> *@
+
+    <label for="ReceiverID">Alıcı Seçimi</label>
+    @Html.DropDownListFor(x => x.ReceiverID, (List<SelectListItem>)ViewBag.RecieverUser, new { @class = "form-control" })
     <br />
     @Html.Label("Konu")
     @Html.TextBoxFor(x=>x.Subject, new {@class="form-control"} )

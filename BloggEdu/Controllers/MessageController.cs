@@ -5,9 +5,11 @@ using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BloggEdu.Controllers
 {
@@ -15,6 +17,15 @@ namespace BloggEdu.Controllers
     {
         Message2Manager mm = new Message2Manager(new EfMessage2Repository());
         Context c = new Context();
+
+        public async Task<List<AppUser>> GetUsersAsync()
+        {
+            using (var context = new Context())
+            {
+                return await context.Users.ToListAsync();
+            }
+        }
+
         public IActionResult InBox()
         {
             var username = User.Identity.Name;
@@ -37,8 +48,17 @@ namespace BloggEdu.Controllers
             return View(value);
         }
         [HttpGet]
-        public IActionResult SendMessage()
+        public async Task<IActionResult> SendMessage()
         {
+            //KUllanıcıları DropDown'a Çektiğimiz Alan            
+            List<SelectListItem> recieverUsers = (from x in await GetUsersAsync()
+                                                  select new SelectListItem
+                                                  {
+                                                      Text = x.Email.ToString(),
+                                                      Value = x.Id.ToString()
+                                                  }).ToList();
+            //Burası Yukarıde Çektiğimiz Verileri Front-End Tarafına Taşıyoruz.
+            ViewBag.RecieverUser = recieverUsers;
             return View();
         }
         [HttpPost]
@@ -48,11 +68,10 @@ namespace BloggEdu.Controllers
             var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
             var writerID = c.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterID).FirstOrDefault();
             p.SenderID = writerID;
-            p.ReceiverID = 2;
             p.MessageStatus = true;
             p.MessageDate= Convert.ToDateTime(DateTime.Now.ToShortDateString());
             mm.TAdd(p);
-            return RedirectToAction("InBox");
+            return RedirectToAction("SendBox");
         }
     }
 
