@@ -5,9 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Test\**" />
     <Compile Remove="wwwroot\uploads\**" />
+    <Content Remove="Areas\Test\**" />
     <Content Remove="wwwroot\uploads\**" />
+    <EmbeddedResource Remove="Areas\Test\**" />
     <EmbeddedResource Remove="wwwroot\uploads\**" />
+    <None Remove="Areas\Test\**" />
     <None Remove="wwwroot\uploads\**" />
   </ItemGroup>
 
@@ -43,7 +47,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Test\Controllers\" />
     <Folder Include="wwwroot\images\BlogImages\" />
     <Folder Include="wwwroot\WriterImageFiles\" />
   </ItemGroup>

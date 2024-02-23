@@ -15,7 +15,7 @@ namespace BloggEdu.Areas.Admin.Controllers
         CategoryManager cm = new CategoryManager(new EfCategoryRepository());
         public IActionResult Index(int page=1)
         {
-            var values = cm.GetList().ToPagedList(page,3);
+            var values = cm.GetList().ToPagedList(page,4);
             return View(values);
         }
         [HttpGet]
