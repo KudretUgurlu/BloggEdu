@@ -25,6 +25,14 @@ namespace BloggEdu.Controllers
                 return await context.Users.ToListAsync();
             }
         }
+        public string CapitalizeFirstLetter(string input)
+        {
+            if (!string.IsNullOrEmpty(input))
+            {
+                return char.ToUpper(input[0]) + input.Substring(1);
+            }
+            return input;
+        }
 
         public IActionResult InBox()
         {
@@ -44,6 +52,16 @@ namespace BloggEdu.Controllers
         }
         public IActionResult MessageDetails(int id)
         {
+            var senderID = c.Message2s.Where(x => x.MessageID == id).Select(y => y.SenderID).FirstOrDefault();
+            var sendername = c.Writers.Where(x => x.WriterID == senderID).Select(y => y.WriterName).FirstOrDefault();
+            ViewBag.sendername = sendername;
+            ViewBag.sendername = CapitalizeFirstLetter(ViewBag.sendername as string);
+
+            var receiverID = c.Message2s.Where(x => x.MessageID == id).Select(y => y.ReceiverID).FirstOrDefault();
+            var receivername = c.Writers.Where(x => x.WriterID == receiverID).Select(y => y.WriterName).FirstOrDefault();
+            ViewBag.receivername = receivername;
+            ViewBag.receivername = CapitalizeFirstLetter(ViewBag.receivername as string);
+
             var value = mm.TGetById(id);
             return View(value);
         }
@@ -69,7 +87,7 @@ namespace BloggEdu.Controllers
             var writerID = c.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterID).FirstOrDefault();
             p.SenderID = writerID;
             p.MessageStatus = true;
-            p.MessageDate= Convert.ToDateTime(DateTime.Now.ToShortDateString());
+            p.MessageDate = Convert.ToDateTime(DateTime.Now.ToShortDateString());
             mm.TAdd(p);
             return RedirectToAction("SendBox");
         }

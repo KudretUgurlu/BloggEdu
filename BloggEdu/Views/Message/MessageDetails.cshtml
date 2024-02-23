@@ -5,16 +5,42 @@
 }
 
 <h1>Mesaj Detay Sayfası</h1>
-<br />
-@Html.Label("Mesaj ID")
-@Html.TextBoxFor(x=>x.MessageID,new{@class="form-control"})
-<br />
-@Html.Label("Mesaj Başlığı")
-@Html.TextBoxFor(x=>x.Subject,new{@class="form-control"})
-<br />
-@Html.Label("Mesaj İçeriği")
-@Html.TextAreaFor(x=>x.MEssageDetails,20,3,new{@class="form-control"})
+<style>
+    th {
+        padding-right: 20px;
+    }
+</style>
+
+<table>
+    <tr>
+        <th>Gönderen</th>
+        <td>:@ViewBag.sendername</td>
+    </tr>
+    <tr>
+        <th>Alıcı</th>
+        <td>:@ViewBag.receivername</td>
+
+    </tr>
+    <tr>
+        <th>Konu</th>
+        <td>:@Model.Subject</td>
+    </tr>
+</table>
+
 <br />
 
-<button class="btn btn-success">Mesajlara Dön</button>
+<table>
+    <tr>
+        <th>Mesaj İçeriği</th>
+    </tr>
+   
+</table>
 
+<div class="form-control" style="height:auto; overflow-y:scroll;" readonly>
+    @Model.MEssageDetails
+</div>
+<br />
+
+@* <a href="@Url.Action("Inbox", "Message")" class="btn btn-success">Gelen Mesajlara Dön</a>
+<a href="@Url.Action("Sendbox", "Message")" class="btn btn-success">Giden Mesajlara Dön</a>
+ *@

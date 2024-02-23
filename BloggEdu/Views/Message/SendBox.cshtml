@@ -21,7 +21,7 @@
         <tr>
             <th>@item.MessageID</th>
             <td>@item.Subject</td>
-            <td>@item.ReceiverUser.WriterName</td>
+            <td>@CapitalizeFirstLetter(@item.ReceiverUser.WriterName)</td>
             <td>@(((DateTime)item.MessageDate).ToString("dd-MMM-yyyy"))</td>
             <td><a href="/Message/MessageDetails/@item.MessageID" class="btn btn-warning">Mesajı Aç</a></td>
         </tr>
@@ -29,3 +29,13 @@
 </table>
 <a href="/Message/SendMessage/" class="btn btn-primary">Yeni Mesaj Oluştur</a>
 
+@functions {
+    public string CapitalizeFirstLetter(string input)
+    {
+        if (!string.IsNullOrEmpty(input))
+        {
+            return char.ToUpper(input[0]) + input.Substring(1).ToLower();
+        }
+        return input;
+    }
+}
