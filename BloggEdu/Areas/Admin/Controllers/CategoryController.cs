@@ -13,20 +13,20 @@ namespace BloggEdu.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         CategoryManager cm = new CategoryManager(new EfCategoryRepository());
-        public IActionResult Index(int page=1)
+        public IActionResult Index(int page = 1)
         {
-            var values = cm.GetList().ToPagedList(page,4);
+            var values = cm.GetList().ToPagedList(page, 4);
             return View(values);
         }
         [HttpGet]
-        public IActionResult AddCategory() 
+        public IActionResult AddCategory()
         {
-        return View();
+            return View();
         }
         [HttpPost]
-        public IActionResult AddCategory(Category p) 
+        public IActionResult AddCategory(Category p)
         {
-          
+
             CategoryValidator cv = new CategoryValidator();
             ValidationResult result = cv.Validate(p);
             if (result.IsValid)
@@ -44,11 +44,24 @@ namespace BloggEdu.Areas.Admin.Controllers
             }
             return View();
         }
-        public IActionResult CategoryDelete(int id) 
+        public IActionResult CategoryDelete(int id)
         {
             var value = cm.TGetById(id);
             cm.TDelete(value);
             return RedirectToAction("Index");
         }
+
+        public IActionResult ToggleCategoryStatus(int id)
+        {
+            var value = cm.TGetById(id);
+            if (value != null)
+            {
+                value.CategoryStatus = !value.CategoryStatus; // Durumu tersine çevir
+                cm.TUpdate(value);
+                return Json(new { success = true, status = value.CategoryStatus });
+            }
+            return Json(new { success = false, message = "Kategori bulunamadı." });
+        }
+
     }
 }

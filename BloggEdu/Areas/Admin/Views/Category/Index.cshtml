@@ -9,33 +9,64 @@
 <h1>Kategori Listesi</h1>
 <br />
 <table class="table table-bordered">
-<tr>
-    <th>#</th>
-    <th>Kategori Adi</th>
-    <th>Pasif Yap</th>
-    <th>Aktif Yap</th>
-    <th>Düzenle</th>
-</tr>
+    <tr>
+        <th>#</th>
+        <th>Kategori Adi</th>
+        <th>Sil</th>
+        <th>Durum</th>
+        <th>Düzenle</th>
+
+    </tr>
     @{
         int pageNumber = Model.PageNumber;
         int pageSize = Model.PageSize;
         int index = ((pageNumber - 1) * pageSize) + 1;
     }
-@foreach (var item in Model)
-{
-    <tr>
-        <th>@index</th>
-        <td>@item.CategoryName</td>
-        <td><a href="/Admin/Category/CategoryDelete/@item.CategoryID/" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz?');" class="btn btn-danger">Pasif Yap</a></td>
-
-        <td><a href="#" class="btn btn-warning">Aktif Yap</a></td>
-        <td><a href="#" class="btn btn-success">Düzenle</a></td>
-    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>@index</th>
+            <td>@item.CategoryName</td>
+            <td><a href="/Admin/Category/CategoryDelete/@item.CategoryID/" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz?');" class="btn btn-danger">Sil</a></td>
+            <td>
+                <a href="javascript:void(0);"
+                   class="btn @((item.CategoryStatus) ? "btn-warning" : "btn-secondary") toggle-status"
+                   data-id="@item.CategoryID"
+                   data-status="@item.CategoryStatus">
+                    @((item.CategoryStatus) ? "Aktif" : "Pasif")
+                </a>
+            </td>
+            <td><a href="#" class="btn btn-success">Düzenle</a></td>
+        </tr>
         index++;
-}
+    }
 </table>
 <a href="/Admin/Category/AddCategory/" class="btn btn-primary">Yeni Kategori</a>
 <br />
 <br />
-@Html.PagedListPager((IPagedList)Model,page=>Url.Action("Index",new{page}))
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        $('.toggle-status').click(function () {
+            var id = $(this).data('id'); // Butondan kategori ID'si alınır
+            var url = '/Admin/Category/ToggleCategoryStatus/' + id;
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (response) {
+                    if (response.success) {
+                        alert("Kategori durumu başarıyla güncellendi.");
+                        location.reload(); // Sayfayı yenile
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function () {
+                    alert("Bir hata oluştu.");
+                }
+            });
+        });
+    });
+</script>
