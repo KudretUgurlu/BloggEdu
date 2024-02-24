@@ -1,0 +1,38 @@
+﻿@model EntityLayer.Concrete.Category
+
+@{
+    ViewData["Title"] = "EditCategory";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Kategori Düzenleme</h1>
+<br />
+@using (Html.BeginForm("EditCategory", "Category", FormMethod.Post)) // Formun gönderildiği aksiyon ve controller ismini düzeltin
+{
+    @Html.HiddenFor(x => x.CategoryID)
+    // Kategori ID'sini gizli bir alan olarak ekleme
+    @Html.LabelFor(x => x.CategoryName)
+    @Html.TextBoxFor(x => x.CategoryName, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.CategoryName)
+    <br />
+    @Html.LabelFor(x => x.CategoryDescription)
+    @Html.TextAreaFor(x => x.CategoryDescription, 15, 3, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.CategoryDescription)
+    <br />
+    <button type="submit" class="btn btn-info">Değişiklikleri Kaydet</button>
+}
+
+@* <h1>Kategori Düzenleme</h1>
+<br />
+@using (Html.BeginForm("AddCategory", "Category", FormMethod.Post))
+{
+    @Html.Label("Kategori Adı")
+    @Html.TextBoxFor(x => x.CategoryName, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.CategoryName)
+    <br />
+    @Html.Label("Kategori Açıklaması")
+    @Html.TextAreaFor(x => x.CategoryDescription, 15, 3, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.CategoryDescription)
+    <br />
+    <button class="btn btn-info">Verileri Kaydet</button>
+} *@

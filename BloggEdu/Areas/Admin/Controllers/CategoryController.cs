@@ -15,7 +15,7 @@ namespace BloggEdu.Areas.Admin.Controllers
         CategoryManager cm = new CategoryManager(new EfCategoryRepository());
         public IActionResult Index(int page = 1)
         {
-            var values = cm.GetList().ToPagedList(page, 4);
+            var values = cm.GetList().ToPagedList(page, 9);
             return View(values);
         }
         [HttpGet]
@@ -62,6 +62,23 @@ namespace BloggEdu.Areas.Admin.Controllers
             }
             return Json(new { success = false, message = "Kategori bulunamadı." });
         }
-
+        [HttpGet]
+        public ActionResult EditCategory(int id)
+        {
+            var value = cm.TGetById(id);
+            return View(value);
+        }
+        [HttpPost]
+        public ActionResult EditCategory(Category category)
+        {
+            var existingCategory = cm.TGetById(category.CategoryID);
+            if (ModelState.IsValid)
+            {
+                category.CategoryStatus = existingCategory.CategoryStatus;
+                cm.TUpdate(category); 
+                return RedirectToAction("Index"); 
+            }
+            return View(category); 
+        }
     }
 }
