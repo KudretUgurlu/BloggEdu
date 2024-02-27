@@ -29,6 +29,17 @@ namespace DataAccsessLayer.Concrete
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             modelBuilder.Entity<Message2>()
+               .HasOne(x => x.SenderUserr)
+               .WithMany(y => y.WriterSender)
+               .HasForeignKey(z => z.SenderID)
+               .OnDelete(DeleteBehavior.ClientSetNull);
+            modelBuilder.Entity<Message2>()
+               .HasOne(x => x.ReceiverUserr)
+               .WithMany(y => y.WriterReceiver)
+               .HasForeignKey(z => z.ReceiverID)
+               .OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<Message2>()
                 .HasOne(x => x.SenderUser)
                 .WithMany(y => y.WriterSender)
                 .HasForeignKey(z => z.SenderID)
@@ -38,6 +49,7 @@ namespace DataAccsessLayer.Concrete
                 .WithMany(y => y.WriterReceiver)
                 .HasForeignKey(z => z.ReceiverID)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+
             base.OnModelCreating(modelBuilder);
 
             //HomeMatches-->WriterSender

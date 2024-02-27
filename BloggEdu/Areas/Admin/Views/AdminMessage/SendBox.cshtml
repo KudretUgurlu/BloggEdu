@@ -24,7 +24,7 @@
                             <h5>Klasörler</h5>
                             <ul class="folder-list m-b-md" style="padding: 0">
                                 <li><a href="/Admin/AdminMessage/Inbox/"> <i class="fa fa-inbox "></i> Gelen Mesajlar <span class="label label-warning float-right">16</span> </a></li>
-                                <li><a href="/Admin/AdminMessage/SendBox/"> <i class="fa fa-envelope-o"></i> SGiden Mesajlar</a></li>
+                                <li><a href="/Admin/AdminMessage/SendBox/"> <i class="fa fa-envelope-o"></i> Giden Mesajlar</a></li>
                                 <li><a href="mailbox.html"> <i class="fa fa-certificate"></i> Önemli</a></li>
                                 <li><a href="mailbox.html"> <i class="fa fa-file-text-o"></i> Taslaklar <span class="label label-danger float-right">2</span></a></li>
                                 <li><a href="mailbox.html"> <i class="fa fa-trash-o"></i> Çöp Kutusu</a></li>
@@ -80,7 +80,7 @@
                                     </td>
                                     <td class="mail-ontact"><a href="mail_detail.html">@item.ReceiverUser.WriterName</a></td>
                                     <td class="mail-subject"><a href="mail_detail.html">@item.Subject</a></td>
-                                    <td class="text-right mail-date">@item.MessageDate</td>
+                                    <td class="text-right mail-date">@(((DateTime)item.MessageDate).ToString("dd-MMM-yyyy"))</td>
                                 </tr>
                             }
 

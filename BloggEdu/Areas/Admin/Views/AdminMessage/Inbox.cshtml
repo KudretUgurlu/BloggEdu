@@ -78,7 +78,7 @@
                                     </td>
                                     <td class="mail-ontact"><a href="mail_detail.html">@item.SenderUser.WriterName</a></td>
                                     <td class="mail-subject"><a href="mail_detail.html">@item.Subject</a></td>
-                                    <td class="text-right mail-date">@item.MessageDate</td>
+                                    <td class="text-right mail-date">@(((DateTime)item.MessageDate).ToString("dd-MMM-yyyy"))</td>
                                 </tr>
                             }
 

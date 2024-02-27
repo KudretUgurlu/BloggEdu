@@ -4,14 +4,16 @@ using DataAccsessLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccsessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240227125623_Relationship_AppUser_btw_Message2")]
+    partial class Relationship_AppUser_btw_Message2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -201,9 +203,6 @@ namespace DataAccsessLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("BlogContent")
                         .HasColumnType("nvarchar(max)");
 
@@ -229,8 +228,6 @@ namespace DataAccsessLayer.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("BlogID");
-
-                    b.HasIndex("AppUserId");
 
                     b.HasIndex("CategoryID");
 
@@ -643,12 +640,6 @@ namespace DataAccsessLayer.Migrations
 
             modelBuilder.Entity("EntityLayer.Concrete.Blog", b =>
                 {
-                    b.HasOne("EntityLayer.Concrete.AppUser", "AppUser")
-                        .WithMany("Blogs")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EntityLayer.Concrete.Category", "Category")
                         .WithMany("Blogs")
                         .HasForeignKey("CategoryID")
@@ -660,8 +651,6 @@ namespace DataAccsessLayer.Migrations
                         .HasForeignKey("WriterID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AppUser");
 
                     b.Navigation("Category");
 
@@ -774,8 +763,6 @@ namespace DataAccsessLayer.Migrations
 
             modelBuilder.Entity("EntityLayer.Concrete.AppUser", b =>
                 {
-                    b.Navigation("Blogs");
-
                     b.Navigation("WriterReceiver");
 
                     b.Navigation("WriterSender");

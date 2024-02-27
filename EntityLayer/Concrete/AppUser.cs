@@ -19,5 +19,13 @@ namespace EntityLayer.Concrete
         [ForeignKey("Writer")]
         public int? WriterID { get; set; }
         public Writer Writer { get; set; }
+
+        public virtual ICollection<Message2> WriterSender { get; set; }
+        public virtual ICollection<Message2> WriterReceiver { get; set; }
+
+       
+        public virtual ICollection<Blog> Blogs { get; set; }
+
+
     }
 }
