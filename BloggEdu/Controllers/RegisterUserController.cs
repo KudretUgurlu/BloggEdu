@@ -56,7 +56,7 @@ namespace BloggEdu.Controllers
                     // Writer oluştur
                     var writer = new Writer()
                     {
-                        WriterName = p.UserName,
+                        WriterName = char.ToUpper(p.UserName[0]) + p.UserName.Substring(1).ToLower(),
                         WriterMail = p.Mail,
                         WriterPassword = p.Password,
                         WriterStatus = true // veya istediğiniz bir değer

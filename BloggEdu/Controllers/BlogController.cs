@@ -96,6 +96,7 @@ namespace BloggEdu.Controllers
                 p.BlogStatus = true;
                 p.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
                 p.WriterID = userId;
+                p.AppUserId = userId;
                 bm.TAdd(p);
                 return RedirectToAction("BlogListByWriter", "Blog");
             }
